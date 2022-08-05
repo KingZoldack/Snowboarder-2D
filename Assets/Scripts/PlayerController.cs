@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _speedBoost;
     [SerializeField] float _averageSpeed;
 
+    bool _canMove = true;
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,16 +26,23 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AddRotation();
-        HandleSpeed();
+        if (_canMove)
+        {
+            AddRotation();
+            HandleSpeed();
+        }
+    }
+
+    public void DisableControls()
+    {
+        _canMove = false;
     }
 
     void HandleSpeed()
     {
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             _surfaceEffector.speed = _speedBoost;
-            Debug.Log("Up");
         }
         else
         {

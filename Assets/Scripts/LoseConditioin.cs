@@ -9,12 +9,23 @@ public class LoseConditioin : MonoBehaviour
 
     [SerializeField] ParticleSystem _loseParticles;
 
+    PlayerController _playerController;
+
+    private void Awake()
+    {
+        if (_playerController == null)
+        {
+            _playerController = GetComponent<PlayerController>();
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Ground")
         {
-            Invoke("LoadIntro", _reloadDelay);
             _loseParticles.Play();
+            _playerController.DisableControls();
+            Invoke("LoadIntro", _reloadDelay);
         }
     }
 
